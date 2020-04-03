@@ -328,18 +328,6 @@ public class AdminController {
 	@ResponseBody
 	public String updateOrders(HttpServletRequest request, Orders orders) {
 		int id = orders.getId();
-		Orders oldorders = ordersService.getOrdersById(id);
-		orders.setGoodsId(oldorders.getGoodsId());
-		orders.setUserId(oldorders.getUserId());
-		Goods goods=goodsService.getGoodsById(oldorders.getGoods().getId());
-		if (oldorders.getOrderState() != orders.getOrderState()) {
-			Float balance = orders.getOrderPrice();
-			if (orders.getOrderState() == 3) {
-				purseService.updatePurseByuserId(goods.getUserId(), balance);
-			} else {
-				purseService.updatePurseOfdel(goods.getUserId(), balance);
-			}
-		}
 		try {
 			ordersService.updateByPrimaryKey(id, orders);
 		} catch (Exception e) {
