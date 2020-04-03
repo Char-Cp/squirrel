@@ -39,9 +39,10 @@
     select * from orders
   </select>
    <select id="selectById" resultMap="BaseResultMap" >
-    select * from orders where id=#{id,jdbcType=INTEGER}
+    select
+    orders.id ,orders.order_num,orders.order_price,orders.order_state ,orders.order_information,orders.order_date,goods.id,goods.name,goods.price
+     from orders , goods   where orders.id=#{id,jdbcType=INTEGER} and orders.goods_id = goods.id
   </select>
-  
      <select id="getPageOrdersByOrders" resultMap="BaseResultMap">
     select * from orders where  1=1
     <if test="orderNum != '' and orderNum != null" >
